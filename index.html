@@ -1,0 +1,205 @@
+<html lang="en" ng-app="appName">
+
+<head>
+
+  <meta name="viewport" content="width = device-width, initial-scale = 1">
+
+  <script src="angular-1.6.9/angular.js"></script>
+  <script src="angular-1.6.9/angular-route.js"></script>
+  <script src="angular-1.6.9/angular-cookies.min.js"></script>
+  <script src="Resource/socket/sockjs.min.js"></script>
+  <script src="Resource/socket/stomp.min.js"></script>
+
+
+  <script src="App/app.module.js"></script>
+  <script src="App/app.route.js"></script>
+  <script type="text/javascript" src="App\components\blog\blogController.js"></script>
+  <script type="text/javascript" src="App\components\login\LoginController.js"></script>
+  <script type="text/javascript" src="App\components\home\homeController.js"></script>
+  <script type="text/javascript" src="App\components\forum\forumController.js"></script>
+  <script type="text/javascript" src="App\components\friend\FriendController.js"></script>
+  <script src="App/components/chat/ChatService.js"></script>
+  <script src="App/components/chat/ChatController.js"></script>
+  <script src="App/components/nav/navController.js"></script>
+  <style>
+  </style>
+</head>
+
+
+<body>
+  <nav class="nav" ng-controller="navController as navCtrl">
+    <div class="nav-wrapper">
+
+
+      <ul id="nav-mobile" class="left">
+        <a ng-show="!currentUser" href="" onclick="$('#login-modal').modal('open');">Login
+          <i class="material-icons right">person</i>
+        </a>
+        <a ng-show="currentUser" href="" >welcome {{currentUser.firstname}}
+          <i class="material-icons right">lock_open</i>
+        </a>
+      </ul>
+
+      <ul id="nav-mobile" class="right">
+        <li ng-show="!currentUser">
+
+          <a href="#!/register">Register
+            <i class="material-icons right">add</i>
+          </a>
+        </li>
+        <li>
+          <a href="#!/home">Home
+            <i class="material-icons right">home</i>
+          </a>
+        </li>
+        <li ng-show="currentUser">
+          <a href="#!/blog/">Blog
+            <i class="material-icons right">language</i>
+          </a>
+        </li>
+        <li ng-show="currentUser">
+          <a href="#!/forum/">Forum
+            <i class="material-icons right">message</i>
+          </a>
+        </li>
+        <li ng-show="currentUser">
+          <a href="" data-activates="chat-slide-out" id="side-chat">Chat
+            <i class="material-icons right">people</i>
+          </a>
+        </li>
+        <li ng-show="currentUser">
+          <a href="" ng-click="logout()">Logout
+            <i class="material-icons right">lock</i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <ul id="chat-slide-out" class="side-nav">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="picture/radio.jpg">
+        </div>
+        <h3>Chat Box</h3>
+      </div>
+    </li>
+    <div ng-controller="ChatController as ChatCtrl" class="chatbox chatbox--tray chatbox--empty" style="padding: 10px">
+      <div ng-repeat="message in ChatCtrl.messages | orderBy:'time':true" class="message">
+        <li>
+          <div class="col s12 m7">
+            <div class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content" style="padding: 10px">
+                  <h6 ng-show="currentUser.firstname == message.username">
+                    <b>{{currentUser.firstname}}</b>
+                  </h6>
+                  <h6 ng-show="currentUser.firstname != message.username">
+                    <i>{{message.username}}</i>
+                  </h6>
+                  <p>
+                    <span ng-class="{self: message.self}">{{message.message}}</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </div>
+
+      <li>
+        <form novalidate class="chatbox__credentials" name="messageForm">
+          <div class="row">
+            <div class="col s9">
+              <div class="form-group">
+                <input type="text" placeholder=" Text here..." ng-model="ChatCtrl.message" size="100" class="form-control" id="inputName"
+                  required>
+              </div>
+            </div>
+            <div class="col s3">
+              <button ng-click="ChatCtrl.addMessage()" class="btn" style="bottom:0px">
+                <i class="small material-icons" aria-hidden="true">send</i></i>
+              </button>
+            </div>
+          </div>
+        </form>
+      </li>
+    </div>
+  </ul>
+  <br>
+
+  <!-- Modal Structure -->
+  <div id="login-modal" class="modal">
+    <div class="modal-content" ng-controller="LoginController as loginCtrl">
+      <div id="login" class="col s12">
+        <div class="container">
+          <form class="col s12">
+            <div class="form-container">
+              <h3 class="teal-text"></h3>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="username" type="text" ng-model="user.email">
+                  <label for="userName">username</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <input id="password" type="password" class="validate" ng-model="user.password">
+                  <label for="password">Password</label>
+                </div>
+              </div>
+              <br>
+              <ul>
+                <center>
+                  <li>
+                    <div ng-show="loader" class="preloader-wrapper big active">
+                      <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div>
+                        <div class="gap-patch">
+                          <div class="circle"></div>
+                        </div>
+                        <div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <button ng-show="!loader" class="btn waves-effect waves-light #6d4c41 brown darken-1" ng-click="test()" name="action">Connect</button>
+                  </li>
+                  <br>
+                  <li>
+
+                  </li>
+                  <li>
+
+                  </li>
+                </center>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+
+    </div>
+  </div>
+
+  <div ng-view></div>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js">  
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"> 
+  </script>
+  <script>
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+  </script>
+</body>
+
+</html>

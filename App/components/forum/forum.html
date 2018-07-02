@@ -1,0 +1,30 @@
+<script>
+    $(document).ready(function() {
+           $('select').material_select();
+         });
+         </script>
+   <div class="container">
+   <form name="reviewform" ng-controller="forumController as reviewctrl" >
+       
+       <div class="input-field col s12">
+           <h3>place to discuss</h3>
+       </div>  
+       <input type="text" placeholder="Title" ng-model="forum.title">
+       <textarea id="textarea1" ng-model="forum.content" placeholder="Description" class="materialize-textarea"></textarea>
+
+       <div class="file-field input-field">
+         <div class="btn">
+           <span>File</span>
+           <input type="file" file-model="image" name="image">
+         </div>
+         <div class="file-path-wrapper">
+           <input class="file-path validate" type="text" placeholder="Upload image file" ng-model="blog.imgName">
+         </div>
+       </div>
+           
+             <label>comment</label>  
+             <textarea></textarea>                      
+         
+   <input type="submit" value="submit" ng-click="addforum()"" />
+   </form>
+   </div>

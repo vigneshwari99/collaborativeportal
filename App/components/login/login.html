@@ -1,0 +1,62 @@
+
+
+<body>
+
+
+  <div class="container white z-depth-1">
+    
+    
+    <div id="register" class="col s12">
+      <div class="container">
+        <form class="col s12">
+          <div class="form-container">
+            <h3 class="teal-text"></h3>
+            <div class="row">
+              <div class="input-field col s6">
+                <input id="last_name" type="text" ng-model="register.firstname" class="validate">
+                <label for="last_name">First Name</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="last_name1" type="text" ng-model="register.lastname" class="validate">
+                <label for="last_name">Last Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email1" type="email" ng-model="register.email" class="validate">
+                <label for="email">Email</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="pass2" type="password" ng-model="register.password" class="validate">
+                <label for="password">Password</label>
+              </div>
+            </div>
+            <center>
+
+              <div ng-show="loader" class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="gap-patch">
+                    <div class="circle"></div>
+                  </div>
+                  <div class="circle-clipper right">
+                    <div class="circle"></div>
+                  </div>
+                </div>
+              </div>
+              <button ng-show="!loader" class="btn waves-effect waves-light #6d4c41 brown darken-1" ng-click="regact()" type="submit" name="action">Submit</button>
+            </center>
+            <br>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</body>
+
+</html>

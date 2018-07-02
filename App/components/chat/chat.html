@@ -1,0 +1,39 @@
+<!-- Chat box Module -->
+
+<div ng-controller="ChatController as ChatCtrl">
+    <div ng-repeat="message in ChatCtrl.messages | orderBy:'time':true" class="message">
+        <li>
+            <div class="col s12 m7">
+                <div class="card horizontal">
+                    <div class="card-stacked">
+                        <div class="card-content">
+                            <h4 ng-show="currentUser.firstname == message.username">{{currentUser.firstname}}</h4>
+                            <h5ng-show="currentUser.firstname != message.username">{{message.username}}</h5>
+                            <p>
+                                <span ng-class="{self: message.self}">{{message.message}}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </div>
+
+    <li>
+        <form novalidate class="chatbox__credentials" name="messageForm">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="form-group">
+                        <input type="text" placeholder=" Text here..." ng-model="ChatCtrl.message" size="100" class="form-control" id="inputName"
+                            required>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <button ng-click="ChatCtrl.addMessage()" class="btn" style="bottom:0px">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </li>
+</div>

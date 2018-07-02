@@ -1,0 +1,73 @@
+<body>
+
+  <h3>Blog</h3>
+  <div class="fixed-action-btn">
+  <a class="btn-floating red btn-large"href="" onclick="$('#modal1').modal('open')">
+      <i class="large material-icons">publish</i></a>
+</div>
+  <div ng-repeat="x in posts">
+    <div class="container">
+      <div class="row">
+        <div class="col s8 push-s3">
+          <div class="card">
+            <div style="padding: 20px" class="cd">
+              <h3 class="header">
+                <div class="row">
+                  <div class="col s9">
+                    {{x.title}}
+                  </div>
+                  <div class="col s3">
+                    <a class="btn-floating btn-small blue" ng-click="editBlog(x.id)">
+                      <i class="small material-icons">mode_edit</i>
+                    </a>
+                  </div>
+                </div>
+              </h3>
+              <p>{{x.content}}</p>
+
+              <div style="height:400px; width:530px;padding-left: 45px;">
+                <img height="95%" width="95%" class="parallel" src="http://localhost:8008/demo/resources/images/posts/{{x.imgName}}">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+  
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+
+      <form>
+        <input type="text" placeholder="Title" ng-model="blog.title">
+        <textarea id="textarea1" ng-model="blog.content" placeholder="Description" class="materialize-textarea"></textarea>
+
+        <div class="file-field input-field">
+          <div class="btn">
+            <span>File</span>
+            <input type="file" file-model="image" name="image">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text" placeholder="Upload image file" ng-model="blog.imgName">
+          </div>
+        </div>
+        <div class="col 12 progress" ng-show="loader">
+          <div class="indeterminate"> </div>
+        </div>
+        <div class="col 12" ng-show="!loader">
+          <input type="submit" class="btn green" value="submit" ng-click="addPost()">
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
+  <script>
+
+  </script>
+
+</body>
